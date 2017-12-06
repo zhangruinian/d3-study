@@ -3,6 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style type="text/css">
+        .axis path,
+        .axis line{
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+    </style>
 </head>
 <body>
 <script src="./lib/d3.js"></script>
@@ -18,6 +31,7 @@
     var scaleLinear = d3.scaleLinear()
         .domain([0, d3.max(dataset)])
         .range([0, 250])
+    // 刻度和字在下面
     var axis = d3.axisBottom()
         .scale(scaleLinear)
         .ticks(7)
@@ -39,7 +53,13 @@
         })
         .attr('height', rectHeight - 2)
         .attr('fill', 'steelblue') // 便于归类和修改应写成外置css样式
+    // 链式调用选了新的元素之后不是一直按着最开始的元素进行调用
 
+    // 是给svg而不是rect添加坐标轴
+    svg.append("g")
+        .attr("class","axis")
+        .attr("transform","translate(20,130)") // 位置默认为 (0,0)
+        .call(axis);
 </script>
 </body>
 </html>
