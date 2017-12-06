@@ -14,7 +14,14 @@
         .append('svg')
         .attr('width', width)
         .attr('height', height)
-    var dataset = [234, 434, 44, 44, 34]
+    var dataset = [234, 434, 44, 3.2, 999]
+    var scaleLinear = d3.scaleLinear()
+        .domain([0, d3.max(dataset)])
+        .range([0, 250])
+    var axis = d3.axisBottom()
+        .scale(scaleLinear)
+        .ticks(7)
+
     // 每个矩形所占据的像素高度
     var rectHeight = 25
     // 当：有数据，而没有足够图形元素的时候，使用此方法可以添加足够的元素。
@@ -24,14 +31,15 @@
         .enter()        //指定选择集的enter部分
         .append('rect') //添加足够数量的矩形元素
         .attr('x', 20)
-        .attr("y",function(d,i){
-            return i * rectHeight; // y轴上往上走
+        .attr('y', function (d, i) {
+            return i * rectHeight // y轴上往上走
         })
-        .attr("width",function(d){
-            return d;
+        .attr('width', function (d) {
+            return scaleLinear(d) // 用比例尺,而不是简单直接的数字数值
         })
-        .attr('height', rectHeight -2)
+        .attr('height', rectHeight - 2)
         .attr('fill', 'steelblue') // 便于归类和修改应写成外置css样式
+
 </script>
 </body>
 </html>
