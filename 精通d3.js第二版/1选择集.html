@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .blue{
+            fill: blue;
+        }
+    </style>
+</head>
+<body>
+<p class="prop">测试property</p>
+<script src="../lib/d3.js"></script>
+<script>
+    var svg = d3.select('body')
+        .append('svg')
+    var circle = svg.append('circle')
+        .attr('cx', '50px')
+        .attr('cy', '50px')
+        .attr('r', '30px')
+        .attr('fill', 'red')
+        .classed('blue', true)
+    console.log(circle.attr('cx'))
+
+    var p = d3.select('.prop')
+        .text('测试property~~~')
+        .style('color', 'red')
+        .style({'font-size':'30px', 'background':'green'}) // 对象形式的style没生效
+</script>
+</body>
+</html>

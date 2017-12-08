@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .axis path,
+        .axis line{
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+<script src="../lib/d3.js"></script>
+<script>
+    // 画布大小
+    var width = 400,
+        height = 400
+    // 添加画布
+    var svg = d3.select('body')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+    var padding = {
+        top: 30,
+        right: 30,
+        bottom: 30,
+        left: 30
+    }
+    //定义一个数组
+    var dataset = [10, 20, 30, 40, 33, 24, 12, 5]
+    // x轴比例尺
+    var xScale = d3.scaleOrdinal()
+        .domain(d3.range(dataset.length)) // 定义域
+        .range([0, width - padding.left - padding.right]) // 值域
+    // y轴比例尺
+    var yScale = d3.scaleLinear()
+        .domain([0, d3.max(dataset)])
+        .range([height - padding.top - padding.bottom, 0])
+
+    // x 坐标轴
+    var xAxis = d3.axisBottom()
+        .scale(xScale)
+    // y 坐标轴
+    var yAxis = d3.axisLeft()
+        .scale(yScale)
+
+    // 矩形之间的空白
+    var rectPadding = 4
+
+    var rects = svg.selectAll('.myRect') //选择svg内所有的矩形
+                .data(dataset)   //绑定数组
+                .enter()        //指定选择集的enter部分
+                .append('rect') //添加足够数量的矩形元素
+                .attr('class', 'myRect')
+                .attr('transform', `translate(${padding.left},${padding.top})`)
+                .attr('x', (d,i) =>{
+                    return xScale(i) + rectPadding/2;
+                })
+                .attr('y', (d, i) => {
+                    return yScale(d)
+                })
+                .attr('width', xScale.range() - rectPadding)
+                .attr('height', (d, i) =>{
+                    return height - padding.top - padding.bottom - yScale(d);
+                })
+                .attr('fill', 'steelblue')
+    //添加文字元素
+    var texts = svg.selectAll(".myText")
+        .data(dataset)
+        .enter()
+        .append("text")
+        .attr("class","myText")
+        .attr("transform","translate(" + padding.left + "," + padding.top + ")")
+        .attr("x", function(d,i){
+            return xScale(i) + rectPadding/2;
+        } )
+        .attr("y",function(d){
+            return yScale(d);
+        })
+        .attr("dx",function(){
+            return (xScale.range() - rectPadding)/2;
+        })
+        .attr("dy",function(d){
+            return 20;
+        })
+        .text(function(d){
+            return d;
+        });
+    // 添加坐标轴元素
+    //添加x轴
+    svg.append("g")
+        .attr("class","axis")
+        .attr("transform","translate(" + padding.left + "," + (height - padding.bottom) + ")")
+        .call(xAxis);
+
+    //添加y轴
+    svg.append("g")
+        .attr("class","axis")
+        .attr("transform","translate(" + padding.left + "," + padding.top + ")")
+        .call(yAxis);
+</script>
+</body>
+</html>
