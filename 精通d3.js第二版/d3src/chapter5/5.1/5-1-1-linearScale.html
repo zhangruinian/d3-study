@@ -5,11 +5,11 @@
   </head> 
 <body>
 
-<script src="../../d3/3.x/d3.min.js" charset="utf-8"></script> 
+<script src="../../d3/4.x/d3.min.js" charset="utf-8"></script>
 <script>  
 
-
-var linear = d3.scale.linear()
+// 二级api转为一级驼峰写法
+var linear = d3.scaleLinear()
 				.domain([0,20])
 				.range([0,100]);
 				
@@ -29,21 +29,19 @@ console.log( linear.domain() );
 linear.domain([33.611111,45.97745]).nice();
 console.log( linear.domain() );
 
-/*
-var linear = d3.scale.linear()
+var linear = d3.scaleLinear()
 				.domain([-20,20])
 				.range([0,100]);
 
 var ticks = linear.ticks(5);
 console.log(ticks);
 
-var tickFormat = linear.tickFormat(5,"+");
+var tickFormat = linear.tickFormat(5,"%");
 for(var i=0;i<ticks.length;i++){
 	ticks[i] = tickFormat(ticks[i]);
 }
 console.log(ticks);
-*/
-	
+
 	
 </script> 
 
