@@ -8,7 +8,7 @@
   </style>
 <body>
 
-<script src="../../d3/3.x/d3.min.js" charset="utf-8"></script> 
+<script src="../../d3/4.x/d3.min.js" charset="utf-8"></script>
 <script>  
 
 var width  = 500;	//SVG绘制区域的宽度
@@ -23,7 +23,10 @@ var svg = d3.select("body")			//选择<body>
 var lines = [[80,80],[200,100],[200,200],[100,200]];
 
 //创建一个线段生成器
-var linePath = d3.svg.line();
+// 3
+//var linePath = d3.svg.line();
+//  4
+var linePath = d3.line();
 
 //添加路径
 svg.append("path")
