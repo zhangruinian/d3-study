@@ -1,13 +1,13 @@
 <html>  
   <head>  
         <meta charset="utf-8">  
-        <title>7.1.4.1 过渡的each</title>  
+        <title>7.1.4.1 过渡的on</title>  
   </head> 
   <style>
   </style>
 <body>
 
-<script src="../../d3/3.x/d3.min.js" charset="utf-8"></script> 
+<script src="../../../../lib/d3-4.js" charset="utf-8"></script>
 <script>  
 
 var width  = 500;	//SVG绘制区域的宽度
@@ -32,20 +32,21 @@ var rect = g.selectAll("rect")
 				.attr("y",function(d,i){ return 10 + i * 35; })
 				.attr("width",function(d,i){ return d; })
 				.attr("height",30);
-			
+// 4版本each 换成on
 g.transition()
 	.duration(2000)
 	.selectAll("rect")
-	.each("start",function(d,i){
-		console.log("start");
+	.on("start",function(d,i){
+		console.log("start", i);
 	})
-	.each("interrupt",function(d,i){
-		console.log("interrupt");
+	.on("interrupt",function(d,i){
+		console.log("interrupt", i);
 	})
-	.each("end",function(d,i){
-		console.log("end");
+	.on("end",function(d,i){
+		console.log("end", i);
 	})
 	.attr("width",300);
+
 					
 setTimeout(function(){
 	g.transition()

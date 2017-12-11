@@ -7,7 +7,7 @@
   </style>
 <body>
 
-<script src="../../d3/3.x/d3.min.js" charset="utf-8"></script> 
+<script src="../../../../lib/d3-4.js" charset="utf-8"></script>
 <script>  
 
 var width  = 500;	//SVG绘制区域的宽度
@@ -30,7 +30,7 @@ var rectTran = rect.transition()
 					.attrTween("width",
 						function(d, i, a) {
 							return function(t){
-								return Number(a) + t * 300;
+								return  100+  t * 300;
 							}
 						}
 					);
@@ -45,16 +45,21 @@ var text = svg.append("text")
 
 var initx = text.attr("x");
 var initText = text.text();
-
+// 100 字符串
+console.log(initText)
+// 数值变化  参考 https://bl.ocks.org/mbostock/7004f92cac972edef365
 var textTran = text.transition()
-					.duration(2000)
-					.tween("text",function(){
-						return function(t){
-							d3.select(this)
-								.attr("x",Number(initx) + t * 300)
-								.text(Math.floor(Number(initText) + t * 300));
-						}
-					});
+        .duration(2000)
+        .tween("text",function(d,i,node){
+            console.log(node)
+            // that是选择对象
+            var that =  d3.select(this)
+            console.log(that)
+            return function(t){
+                    that.attr("x",Number(initx) + t * 300) // 4.x此处报错
+                        .text(Math.floor(Number(initText) + t * 300));
+            }
+        });
 
 </script> 
 

@@ -7,7 +7,7 @@
   </style>
 <body>
 
-<script src="../../d3/3.x/d3.min.js" charset="utf-8"></script> 
+<script src="../../d3/4.x/d3.min.js" charset="utf-8"></script>
 <script>  
 
 var width  = 500;	//SVG绘制区域的宽度
@@ -26,12 +26,10 @@ svg.append("rect")
 		.attr("height",30)
 		.transition()
 		.duration(1000)
-		.ease("back-out-in")
+		.ease(d3.easeBounce)
 		.attr("width",300);
-			
 
-
-</script> 
+</script>
 
 </body>
 
