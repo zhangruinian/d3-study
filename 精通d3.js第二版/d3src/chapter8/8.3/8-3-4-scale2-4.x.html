@@ -7,7 +7,7 @@
 
   </style>
 <body>
-
+<!--参考 比例尺,坐标轴缩放 https://bl.ocks.org/mbostock/db6b4335bf1662b413e7968910104f0f-->
 <script src="../../d3/4.x/d3.min.js" charset="utf-8"></script>
 <script>  
 
@@ -36,19 +36,14 @@ var zoom = d3.zoom()		//创建一个缩放行为
 			.scaleExtent([1, 10])	//设置缩放的范围
 			.on("zoom", function(d){
                 var transform = d3.zoomTransform(this)
-                transform.rescaleX(function (x) {
-                    var range = x.range().map(transform.invertX, transform),
-                        domain = range.map(x.invert, x);
-                    return x.copy().domain(domain);
-                })
 //                transform.rescaleY(y)
 				console.log("x 的定义域：" + x.domain());
 				console.log("x 的值域：" + x.range());
 				console.log("y 的定义域：" + y.domain());
 				console.log("y 的值域：" + y.range());
-                d3.select(this).attr("transform",
-                    "translate(" + d3.event.transform.x + ',' +  d3.event.transform.y +")" +	//平移量
-                    "scale(" +  d3.event.transform.k + ")");	//缩放量
+                console.log(d3.event.transform)
+                d3.select(this).attr("transform",d3.event.transform);
+                g.call(d3.event.transform.rescaleX(x))
 			});
 			
 		
