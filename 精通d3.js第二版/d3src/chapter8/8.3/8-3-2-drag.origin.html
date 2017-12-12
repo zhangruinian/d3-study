@@ -8,7 +8,7 @@
   </style>
 <body>
 
-<script src="../../d3/3.x/d3.min.js" charset="utf-8"></script> 
+<script src="../../d3/4.x/d3.min.js" charset="utf-8"></script>
 <script>  
 
 var width  = 400;	//SVG绘制区域的宽度
@@ -22,14 +22,14 @@ var svg = d3.select("body")			//选择<body>
 var circles = [ { cx: 150, cy:200, r:30 },
 				{ cx: 250, cy:200, r:30 }];
 			
-var drag = d3.behavior.drag()		//创建一个拖拽行为
-				.origin(function(d,i){
+var drag = d3.drag()		//创建一个拖拽行为
+				.subject(function(d,i){
 					return {x: 300 ,y: 300 } 
 				})
-				.on("dragstart", function(d){	//dragstart的监听器	
+				.on("start", function(d){	//dragstart的监听器
 					console.log("拖拽开始");	
 				})
-				.on("dragend", function(d){		//dragend的监听器
+				.on("end", function(d){		//dragend的监听器
 					console.log("拖拽结束");
 				})
 				.on("drag", function(d){		//drag的监听器

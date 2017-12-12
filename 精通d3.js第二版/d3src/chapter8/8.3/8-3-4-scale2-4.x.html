@@ -8,7 +8,7 @@
   </style>
 <body>
 
-<script src="../../d3/3.x/d3.min.js" charset="utf-8"></script> 
+<script src="../../d3/4.x/d3.min.js" charset="utf-8"></script>
 <script>  
 
 var width  = 400;	//SVG绘制区域的宽度
@@ -19,11 +19,11 @@ var svg = d3.select("body")			//选择<body>
 			.attr("width", width)	//设定<svg>的宽度属性
 			.attr("height", height);//设定<svg>的高度属性
 			
-var x = d3.scale.linear()
+var x = d3.scaleLinear()
     .domain([0, width])
     .range([0, width]);
 
-var y = d3.scale.linear()
+var y = d3.scaleLinear()
     .domain([0, height])
     .range([0, height]);
 			
@@ -31,20 +31,24 @@ var circles = [ { cx: 150, cy:200, r:30 },
 				{ cx: 220, cy:200, r:30 },
 				{ cx: 150, cy:270, r:30 },
 				{ cx: 220, cy:270, r:30 }];
-		
-var zoom = d3.behavior.zoom()		//创建一个缩放行为
-			.x(x)
-			.y(y)
+
+var zoom = d3.zoom()		//创建一个缩放行为
 			.scaleExtent([1, 10])	//设置缩放的范围
 			.on("zoom", function(d){
+                var transform = d3.zoomTransform(this)
+                transform.rescaleX(function (x) {
+                    var range = x.range().map(transform.invertX, transform),
+                        domain = range.map(x.invert, x);
+                    return x.copy().domain(domain);
+                })
+//                transform.rescaleY(y)
 				console.log("x 的定义域：" + x.domain());
 				console.log("x 的值域：" + x.range());
 				console.log("y 的定义域：" + y.domain());
 				console.log("y 的值域：" + y.range());
-                console.log(d3.event)
-				d3.select(this).attr("transform",
-					"translate(" + d3.event.translate + ")" +	//平移量
-					"scale(" + d3.event.scale + ")");	//缩放量
+                d3.select(this).attr("transform",
+                    "translate(" + d3.event.transform.x + ',' +  d3.event.transform.y +")" +	//平移量
+                    "scale(" +  d3.event.transform.k + ")");	//缩放量
 			});
 			
 		
@@ -59,8 +63,6 @@ var circles = g.selectAll("circle")
 				.attr("cy",function(d){ return d.cy; })
 				.attr("r",function(d){ return d.r; })
 				.attr("fill","black");
-				
-
 	
 </script> 
 

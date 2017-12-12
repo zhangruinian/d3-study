@@ -20,7 +20,7 @@
   </style>
 <body>
 
-<script src="../../d3/3.x/d3.min.js" charset="utf-8"></script> 
+<script src="../../d3/4.x/d3.min.js" charset="utf-8"></script>
 <script>  
 
 var dataset = [50, 43, 120, 87, 99, 167, 142];
@@ -40,12 +40,12 @@ var xAxisWidth = 300;
 var yAxisWidth = 300;
 			
 //x轴比例尺
-var xScale = d3.scale.ordinal()
+var xScale = d3.scaleBand()
 				.domain(d3.range(dataset.length))
-				.rangeRoundBands([0,xAxisWidth],0.2);
+				.rangeRound([0,xAxisWidth],0.2);
 
 //y轴比例尺
-var yScale = d3.scale.linear()
+var yScale = d3.scaleLinear()
 				.domain([0,d3.max(dataset)])
 				.range([0,yAxisWidth]);			
 	
@@ -63,7 +63,7 @@ var rect = svg.selectAll("rect")
 				.attr("y", function(d){		//设置矩形的y坐标
 					return height- padding.bottom - yScale(d);
 				})
-				.attr("width",xScale.rangeBand())		//设置矩形的宽度
+				.attr("width",xScale.bandwidth() -3)		//设置矩形的宽度
 				.attr("height",function(d){	//设置矩形的高度
 					return yScale(d);
 				})
@@ -91,21 +91,21 @@ var text = svg.selectAll("text")
 				.attr("y", function(d){
 					return height- padding.bottom - yScale(d);
 				})
-				.attr("dx",xScale.rangeBand()/2)
+				.attr("dx",xScale.bandwidth()/2)
 				.attr("dy","1em")
 				.text(function(d){
 					return d;
 				});
 
-var xAxis = d3.svg.axis()
+var xAxis = d3.axisBottom()
 				.scale(xScale)
-				.orient("bottom");
+
 
 yScale.range([yAxisWidth,0]);
 				
-var yAxis = d3.svg.axis()
+var yAxis = d3.axisLeft()
 				.scale(yScale)
-				.orient("left");
+
 				
 svg.append("g")
 		.attr("class","axis")
